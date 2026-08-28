@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { Show, SignInButton, UserButton } from "@clerk/nextjs";
 import { cn } from "@/components/ui/cn";
 import { Container } from "./Section";
 
@@ -75,12 +76,24 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Link
-          href="/portal"
-          className={cn(loginBtn, "hidden lg:inline-flex")}
-        >
-          Member Login
-        </Link>
+        <div className="hidden items-center gap-3 lg:flex">
+          <Show when="signed-out">
+            <SignInButton>
+              <button type="button" className={cn(loginBtn, "inline-flex")}>
+                Member Login
+              </button>
+            </SignInButton>
+          </Show>
+          <Show when="signed-in">
+            <Link
+              href="/portal"
+              className="text-[13.5px] font-semibold text-primary transition-colors hover:text-primary-hover"
+            >
+              Portal
+            </Link>
+            <UserButton />
+          </Show>
+        </div>
 
         <button
           type="button"
@@ -112,13 +125,30 @@ export function SiteHeader() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/portal"
-              onClick={() => setOpen(false)}
-              className={cn(loginBtn, "mt-2 flex w-full")}
-            >
-              Member Login
-            </Link>
+            <Show when="signed-out">
+              <SignInButton>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className={cn(loginBtn, "mt-2 flex w-full")}
+                >
+                  Member Login
+                </button>
+              </SignInButton>
+            </Show>
+            <Show when="signed-in">
+              <Link
+                href="/portal"
+                onClick={() => setOpen(false)}
+                className={cn(loginBtn, "mt-2 flex w-full")}
+              >
+                Go to Portal
+              </Link>
+              <div className="mt-3 flex items-center gap-3 px-2">
+                <UserButton />
+                <span className="text-[13.5px] text-ink-muted">Your account</span>
+              </div>
+            </Show>
           </Container>
         </div>
       )}
