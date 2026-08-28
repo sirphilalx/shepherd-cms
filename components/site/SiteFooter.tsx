@@ -1,5 +1,9 @@
 import { Container } from "./Section";
 
+/**
+ * The site footer with copyright and service times information.
+ * @returns A footer component
+ */
 export function SiteFooter() {
   return (
     <footer className="border-t border-border py-8">

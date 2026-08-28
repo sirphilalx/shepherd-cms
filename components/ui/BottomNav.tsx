@@ -7,6 +7,13 @@ export interface BottomNavItem {
   icon: IconName;
 }
 
+/**
+ * A mobile bottom navigation bar with icon and label for each item.
+ * @param items - Navigation items to display
+ * @param activeHref - The currently active route
+ * @param className - Optional additional CSS classes
+ * @returns A bottom navigation component
+ */
 export function BottomNav({
   items,
   activeHref,

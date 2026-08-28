@@ -1,5 +1,14 @@
 import { cn } from "./cn";
 
+/**
+ * Displays a key performance indicator card with value and optional trend.
+ * @param variant - Display style: "dark" for primary metric, "light" for secondary metrics
+ * @param label - Descriptive label for the metric
+ * @param value - The metric value to display (number or string)
+ * @param trend - Optional trend indicator text
+ * @param className - Optional additional CSS classes
+ * @returns A styled KPI card component
+ */
 export function KpiCard({
   variant = "light",
   label,

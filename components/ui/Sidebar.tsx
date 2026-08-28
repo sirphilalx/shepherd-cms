@@ -10,6 +10,16 @@ export interface SidebarItem {
   icon: IconName;
 }
 
+/**
+ * A collapsible sidebar navigation component with brand header and optional footer items.
+ * @param items - Main navigation items to display
+ * @param footerItems - Optional items to display in footer section
+ * @param activeHref - The currently active route
+ * @param brandName - Brand name to display in header (defaults to "Shepherd")
+ * @param defaultCollapsed - Whether sidebar starts collapsed
+ * @param className - Optional additional CSS classes
+ * @returns A sidebar navigation component
+ */
 export function Sidebar({
   items,
   footerItems,
@@ -69,6 +79,13 @@ export function Sidebar({
   );
 }
 
+/**
+ * Renders a single navigation link within the sidebar.
+ * @param item - The sidebar item containing label, href, and icon
+ * @param active - Whether this link is currently active
+ * @param collapsed - Whether the sidebar is in collapsed state
+ * @returns A styled navigation link
+ */
 function SidebarLink({
   item,
   active,

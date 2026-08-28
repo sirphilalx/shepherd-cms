@@ -10,6 +10,13 @@ const statusClasses: Record<BadgeStatus, string> = {
   neutral: "bg-tint text-primary",
 };
 
+/**
+ * Displays a colored badge with rounded styling based on status.
+ * @param status - The status type that determines badge color (success, warning, danger, info, neutral)
+ * @param className - Optional additional CSS classes
+ * @param children - Content to display inside the badge
+ * @returns A styled badge component
+ */
 export function Badge({
   status = "neutral",
   className,

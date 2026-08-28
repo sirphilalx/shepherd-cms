@@ -46,6 +46,14 @@ export const icons = {
 
 export type IconName = keyof typeof icons;
 
+/**
+ * Renders a Lucide icon by name with consistent styling.
+ * @param name - The icon name from the icons registry
+ * @param size - Icon size in pixels (defaults to 16)
+ * @param strokeWidth - Stroke width for the icon (defaults to 1.7)
+ * @param props - Additional Lucide icon props
+ * @returns A styled icon component
+ */
 export function Icon({
   name,
   size = 16,

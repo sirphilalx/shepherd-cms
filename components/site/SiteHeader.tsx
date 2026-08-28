@@ -26,6 +26,11 @@ const navLinks: NavLink[] = [
 const loginBtn =
   "items-center justify-center gap-2 rounded-full bg-primary px-[18px] py-[10px] text-[13.5px] font-semibold text-white transition-colors hover:bg-primary-hover";
 
+/**
+ * The main site header with logo, navigation, and authentication controls.
+ * Includes mobile menu with responsive layout.
+ * @returns A sticky site header component
+ */
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);

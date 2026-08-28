@@ -22,6 +22,12 @@ export const metadata: Metadata = {
     "A church family, gathered every week — service times, sermons, events, and the member portal for The Church of Christ, Evueta.",
 };
 
+/**
+ * The root layout component that wraps the entire application.
+ * Sets up fonts, ClerkProvider, and base HTML structure.
+ * @param children - The page content to render
+ * @returns The root HTML layout
+ */
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html

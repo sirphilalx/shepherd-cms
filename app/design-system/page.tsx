@@ -51,6 +51,13 @@ const memberRows: MemberRow[] = [
   { id: 2, name: "Tamuno Wobo", initials: "TW", zone: "Zone 2", role: "Usher" },
 ];
 
+/**
+ * A card wrapper for design system sections.
+ * @param title - The section title
+ * @param subtitle - The section subtitle description
+ * @param children - The section content to display
+ * @returns A card containing a design system section
+ */
 function SectionCard({
   title,
   subtitle,
@@ -71,6 +78,11 @@ function SectionCard({
   );
 }
 
+/**
+ * The design system showcase page displaying all UI components, colors, typography,
+ * and design patterns used throughout the application.
+ * @returns The design system documentation page
+ */
 export default function DesignSystemPage() {
   return (
     <div className="mx-auto max-w-[1100px] px-4 py-8 md:px-6 md:py-12">

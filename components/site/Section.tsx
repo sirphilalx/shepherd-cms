@@ -1,6 +1,11 @@
 import { cn } from "@/components/ui/cn";
 
-/** Shared container width for every public page. */
+/**
+ * Shared container width for every public page.
+ * @param className - Optional additional CSS classes
+ * @param children - Content to display inside the container
+ * @returns A centered container with max-width constraints
+ */
 export function Container({
   className,
   children,

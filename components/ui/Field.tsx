@@ -1,6 +1,12 @@
 import { type InputHTMLAttributes, forwardRef } from "react";
 import { cn } from "./cn";
 
+/**
+ * A styled text input component.
+ * @param className - Optional additional CSS classes
+ * @param props - Standard HTML input attributes
+ * @returns A styled input element
+ */
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
   ({ className, ...props }, ref) => (
     <input
@@ -15,7 +21,13 @@ export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputE
 );
 Input.displayName = "Input";
 
-/** Wraps its input/select/textarea in a real <label> — no id plumbing required. */
+/**
+ * Wraps its input/select/textarea in a real <label> — no id plumbing required.
+ * @param label - The label text to display above the input
+ * @param className - Optional additional CSS classes
+ * @param children - The input, select, or textarea element to wrap
+ * @returns A labeled field component
+ */
 export function Field({
   label,
   className,

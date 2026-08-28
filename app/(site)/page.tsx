@@ -147,6 +147,11 @@ const pillLink =
 const eyebrow =
   "text-[11px] font-semibold uppercase tracking-[0.08em] text-accent";
 
+/**
+ * The homepage component displaying hero section, service times, sermons,
+ * zones, ministries, events, library items, and visit CTA.
+ * @returns The homepage
+ */
 export default function HomePage() {
   return (
     <>
