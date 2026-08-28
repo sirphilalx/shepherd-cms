@@ -16,8 +16,9 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Shepherd",
-  description: "Church management system — website, member portal, and admin panel.",
+  title: "The Church of Christ, Evueta",
+  description:
+    "A church family, gathered every week — service times, sermons, events, and the member portal for The Church of Christ, Evueta.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
