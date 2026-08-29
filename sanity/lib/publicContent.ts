@@ -20,6 +20,11 @@ import type {
  * Public content read layer. Every helper only ever returns `status: "published"`
  * documents — the queries hard-filter it and the client runs under
  * `perspective: 'published'`. Safe to call from ungated public pages.
+ *
+ * The dataset is public, so `sanityFetch` (from ./live.ts) reads published
+ * content with no token and gives caching / live revalidation for free. Draft
+ * and in-review content still goes through the tokened, server-only admin
+ * client — see ./adminClient.ts.
  */
 
 export async function getPublishedSermons(): Promise<PublishedSermonListItem[]> {

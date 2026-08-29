@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   Baby,
-  Calendar,
   ChevronRight,
   Download,
   FileText,
@@ -15,6 +14,12 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Container, Section } from "@/components/site/Section";
+import { EventCard } from "@/components/site/EventCard";
+import { flattenLibraryFiles } from "@/components/site/library";
+import {
+  getPublishedLibraryItems,
+  getUpcomingEvents,
+} from "@/sanity/lib/publicContent";
 import { cn } from "@/components/ui/cn";
 import heroImg from "@/public/worship-singing.jpg";
 import zonesImg from "@/public/worship-portrait.jpg";
@@ -70,68 +75,6 @@ const ministries: Ministry[] = [
   },
 ];
 
-type EventItem = {
-  date: string;
-  title: string;
-  blurb: string;
-  location: string;
-  ministry: string;
-};
-const events: EventItem[] = [
-  {
-    date: "Sept 12–13",
-    title: "Youth Conference 2026",
-    blurb: "Two days of worship, workshops and fellowship for ages 13–25.",
-    location: "Main auditorium",
-    ministry: "Youth Ministry",
-  },
-  {
-    date: "Sept 20",
-    title: "Choir Rehearsal Retreat",
-    blurb: "A day set apart for the choir ahead of the Q4 season.",
-    location: "Fellowship Hall",
-    ministry: "Choir",
-  },
-  {
-    date: "Oct 5",
-    title: "Foundation Class Graduation",
-    blurb: "Celebrating this quarter's new believers.",
-    location: "Main auditorium",
-    ministry: "Foundation Class",
-  },
-];
-
-type LibraryItem = {
-  category: string;
-  filename: string;
-  blurb: string;
-  type: string;
-  size: string;
-};
-const libraryItems: LibraryItem[] = [
-  {
-    category: "Foundation Class",
-    filename: "Foundation Class Wk 6 Notes.pdf",
-    blurb: "Session six handouts for new believers.",
-    type: "PDF",
-    size: "1.4 MB",
-  },
-  {
-    category: "Teaching Ministry",
-    filename: "Walking in Grace Slides.pptx",
-    blurb: "This week's teaching slides.",
-    type: "PPT",
-    size: "3.8 MB",
-  },
-  {
-    category: "Children's Ministry",
-    filename: "David & Goliath Lesson Series.pdf",
-    blurb: "This quarter's children's class series.",
-    type: "PDF",
-    size: "2.0 MB",
-  },
-];
-
 /* --- Link recipes (Button component is <button>-only; these CTAs are links) --- */
 
 const btnBase =
@@ -147,7 +90,13 @@ const pillLink =
 const eyebrow =
   "text-[11px] font-semibold uppercase tracking-[0.08em] text-accent";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const libraryFiles = flattenLibraryFiles(await getPublishedLibraryItems()).slice(
+    0,
+    3,
+  );
+  const upcomingEvents = (await getUpcomingEvents()).slice(0, 3);
+
   return (
     <>
       {/* Hero */}
@@ -303,85 +252,70 @@ export default function HomePage() {
       </Section>
 
       {/* Upcoming */}
-      <Section
-        title="Upcoming"
-        subtitle="What's on across the church this month."
-        action={
-          <Link href="/events" className={pillLink}>
-            All events
-            <ChevronRight size={14} />
-          </Link>
-        }
-      >
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {events.map((e) => (
-            <article
-              key={e.title}
-              className="flex flex-col overflow-hidden rounded-lg bg-surface shadow-card"
-            >
-              <div
-                className="flex h-[132px] items-center justify-center bg-tint text-primary/40"
-                aria-hidden
-              >
-                <Calendar size={30} strokeWidth={1.5} />
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <p className={eyebrow}>{e.date}</p>
-                <h3 className="mt-2 font-serif text-[18px] text-ink">{e.title}</h3>
-                <p className="mt-2 flex-1 text-[13px] leading-[1.6] text-ink-muted">
-                  {e.blurb}
-                </p>
-                <div className="mt-4 flex items-center justify-between border-t border-border pt-3 text-[11.5px] text-ink-faint">
-                  <span>{e.location}</span>
-                  <span>{e.ministry}</span>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </Section>
+      {upcomingEvents.length > 0 && (
+        <Section
+          title="Upcoming"
+          subtitle="What's coming up across the church."
+          action={
+            <Link href="/events" className={pillLink}>
+              All events
+              <ChevronRight size={14} />
+            </Link>
+          }
+        >
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {upcomingEvents.map((event) => (
+              <EventCard key={event._id} event={event} />
+            ))}
+          </div>
+        </Section>
+      )}
 
       {/* From the library */}
-      <Section
-        title="From the library"
-        subtitle="Recent notes and slides, free to download."
-        action={
-          <Link href="/library" className={pillLink}>
-            Browse library
-            <ChevronRight size={14} />
-          </Link>
-        }
-      >
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {libraryItems.map((item) => (
-            <Link
-              key={item.filename}
-              href="/library"
-              className="flex flex-col overflow-hidden rounded-lg bg-surface shadow-card transition-shadow hover:shadow-pop"
-            >
-              <div
-                className="flex h-[132px] items-center justify-center bg-tint text-primary/40"
-                aria-hidden
-              >
-                <FileText size={30} strokeWidth={1.5} />
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <p className={eyebrow}>{item.category}</p>
-                <h3 className="mt-2 font-serif text-[16px] break-words text-ink">
-                  {item.filename}
-                </h3>
-                <p className="mt-2 flex-1 text-[13px] leading-[1.6] text-ink-muted">
-                  {item.blurb}
-                </p>
-                <div className="mt-4 flex items-center justify-between border-t border-border pt-3 text-[11.5px] text-ink-faint">
-                  <span>{item.type}</span>
-                  <span>{item.size}</span>
-                </div>
-              </div>
+      {libraryFiles.length > 0 && (
+        <Section
+          title="From the library"
+          subtitle="Recent notes and slides, free to download."
+          action={
+            <Link href="/library" className={pillLink}>
+              Browse library
+              <ChevronRight size={14} />
             </Link>
-          ))}
-        </div>
-      </Section>
+          }
+        >
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {libraryFiles.map((row) => (
+              <a
+                key={row.key}
+                href={row.downloadUrl}
+                download
+                aria-label={`Download ${row.filename}`}
+                className="flex flex-col overflow-hidden rounded-lg bg-surface shadow-card transition-shadow hover:shadow-pop"
+              >
+                <div
+                  className="flex h-[132px] items-center justify-center bg-tint text-primary/40"
+                  aria-hidden
+                >
+                  <FileText size={30} strokeWidth={1.5} />
+                </div>
+                <div className="flex flex-1 flex-col p-5">
+                  <p className={eyebrow}>{row.category}</p>
+                  <h3 className="mt-2 font-serif text-[16px] break-words text-ink">
+                    {row.filename}
+                  </h3>
+                  <p className="mt-2 line-clamp-2 flex-1 text-[13px] leading-[1.6] text-ink-muted">
+                    {row.description}
+                  </p>
+                  <div className="mt-4 flex items-center justify-between border-t border-border pt-3 text-[11.5px] text-ink-faint">
+                    <span>{row.typeLabel}</span>
+                    <span>{row.sizeLabel}</span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </Section>
+      )}
 
       {/* Visit CTA band */}
       <section className="relative isolate overflow-hidden bg-primary">
