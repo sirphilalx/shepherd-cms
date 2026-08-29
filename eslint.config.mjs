@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Standalone Studio workspace — linted from studio/ itself.
+    "studio/**",
   ]),
 ]);
 
